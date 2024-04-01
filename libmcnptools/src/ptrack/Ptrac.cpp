@@ -227,7 +227,7 @@ void Ptrac::ReadHeader() {
 
     // read the comment line
     cjsoft::stringops::getline(m_handle, m_comment); // processes to the next line
-    cjsoft::stringops::getline(m_handle, m_comment);
+    // cjsoft::stringops::getline(m_handle, m_comment);
 
     // read the keyword entries
     bool done = false;
@@ -307,7 +307,7 @@ void Ptrac::ReadHeader() {
 }
 
 PtracHistory Ptrac::ReadHistory() {
-  int size1, size2;
+  uint32_t size1, size2;
 
   PtracHistory hist;
 
@@ -317,32 +317,55 @@ PtracHistory Ptrac::ReadHistory() {
 
   PtracNps nps;
   for(unsigned int i=0; i<m_nument["nps"]; i++) {
-    int64_t tmp;
-
-    ReadValue(tmp);
-
-    if( ! m_handle.good() )
-      return hist;
-
     switch( m_datent["nps"][i] ) {
-      case Ptrac::NPS:
+      case Ptrac::NPS:{
+        uint64_t tmp;
+        ReadValue(tmp);
+        if( ! m_handle.good() )
+            return hist;
         nps.m_nps = tmp;
         break;
-      case Ptrac::FIRST_EVENT_TYPE:
+      }
+      case Ptrac::FIRST_EVENT_TYPE: {
+        uint64_t tmp;
+        ReadValue(tmp);
+        if( ! m_handle.good() )
+            return hist;
         next_event_type = tmp;
         break;
-      case Ptrac::NPSCELL:
+      }
+      case Ptrac::NPSCELL:{
+        uint64_t tmp;
+        ReadValue(tmp);
+        if( ! m_handle.good() )
+            return hist;
         nps.m_cell = tmp;
         break;
-      case Ptrac::NPSSURFACE:
+      }
+      case Ptrac::NPSSURFACE:{
+        uint64_t tmp;
+        ReadValue(tmp);
+        if( ! m_handle.good() )
+            return hist;
         nps.m_surface = tmp;
         break;
-      case Ptrac::TALLY:
+      }
+      case Ptrac::TALLY:{
+        double tmp; // read as double
+        ReadValue(tmp);
+        if( ! m_handle.good() )
+            return hist;
         nps.m_tally = tmp;
         break;
-      case Ptrac::VALUE:
-        nps.m_tally = tmp;
+      }
+      case Ptrac::VALUE:{
+        double tmp; // read as double
+        ReadValue(tmp);
+        if( ! m_handle.good() )
+            return hist;
+        nps.m_value = tmp;
         break;
+      }
     }
   }
 

@@ -7,6 +7,7 @@ list(APPEND TEST_SRCS
   AscPtracHistoryNumEvents.cpp
   AscPtracReadHistories.cpp
   AscPtracReadHistoriesNoHeader.cpp
+  AscPtracReadHistoriesF8Filter.cpp
 )
 
 foreach(tsrc IN LISTS TEST_SRCS)

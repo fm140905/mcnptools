@@ -39,7 +39,7 @@ private:
   template<class T>
   void ReadValue(T& val, bool eof_ok=false) {
     if( m_format == Ptrac::BIN_PTRAC) {
-      m_handle.read( (char*) &val, sizeof(T) );
+      m_handle.read( (char*) &val, sizeof(T)/sizeof(char) );
     }
     else {
       m_handle >> val;
